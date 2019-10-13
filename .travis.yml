@@ -11,6 +11,9 @@ jdk:
 
 service:
   - docker
+  
+services:
+  - xvfb  
 
 addons:
   apt:
