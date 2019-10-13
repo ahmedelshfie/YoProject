@@ -34,7 +34,6 @@ install: true
 before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
   #
   - sudo apt-get update -yqq >/dev/null
   - sudo apt-get install -yqq --no-install-suggests --no-install-recommends
@@ -44,14 +43,6 @@ before_install:
   #
   - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
   - stop_any 8080 3000 80 >/dev/null
-
-
-before_script:
-  # start XVFB to test the extension (headless does not install extensions fully)
-  # https://docs.travis-ci.com/user/gui-and-headless-browsers/#using-xvfb-to-run-tests-that-require-a-gui
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
   
 script:
   - export root=$(pwd)
@@ -86,6 +77,7 @@ script:
   - sleep 20
   - http :8080
   - bash mvnw docker-compose:down -P docker
+  
 
 before_deploy:
   - cd ${root}
